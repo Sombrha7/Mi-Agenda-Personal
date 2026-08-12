@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mi Agenda Personal</title>
+  <style>
+    :root{--azul:#155eef;--fondo:#f4f7fb;--texto:#172033;--gris:#667085;--borde:#d9e1ec;--rojo:#d92d20;--verde:#14804a}
+    *{box-sizing:border-box} body{margin:0;font-family:Arial,sans-serif;background:var(--fondo);color:var(--texto)}
+    header{background:linear-gradient(135deg,#0b3aa4,var(--azul));color:white;padding:32px 20px}
+    header div,main{max-width:960px;margin:auto} h1{margin:0 0 7px;font-size:2rem} header p{margin:0;opacity:.9}
+    main{padding:22px 16px 48px}.panel{background:white;border-radius:16px;padding:20px;box-shadow:0 8px 24px #102a5614;margin-bottom:18px}
+    form{display:grid;grid-template-columns:2fr 1fr 1fr 1fr auto;gap:10px;align-items:end} label{display:block;font-size:.82rem;font-weight:bold;margin-bottom:6px}
+    input,select,button{width:100%;padding:11px;border:1px solid var(--borde);border-radius:9px;font:inherit}button{cursor:pointer;font-weight:bold}
+    .principal{background:var(--azul);color:#fff;border-color:var(--azul);white-space:nowrap}.principal:hover{filter:brightness(.93)}
+    .barra{display:flex;gap:10px;justify-content:space-between;align-items:center;flex-wrap:wrap}.barra input{max-width:320px}.contador{color:var(--gris);font-size:.9rem}
+    #lista{display:grid;gap:10px;margin-top:16px}.tarea{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;border:1px solid var(--borde);border-left:5px solid var(--azul);padding:13px;border-radius:11px;background:#fff}
+    .tarea.alta{border-left-color:var(--rojo)}.tarea.baja{border-left-color:var(--verde)}.tarea.completa{opacity:.58}.tarea.completa .titulo{text-decoration:line-through}
+    .check{width:20px;height:20px}.titulo{font-weight:bold;margin-bottom:5px}.meta{font-size:.84rem;color:var(--gris)}.acciones{display:flex;gap:6px}.acciones button{width:auto;padding:7px 10px;background:#fff}.eliminar{color:var(--rojo)}
+    .vacio{text-align:center;color:var(--gris);padding:35px 10px}.nota{font-size:.8rem;color:var(--gris);margin-top:12px}
+    @media(max-width:760px){form{grid-template-columns:1fr 1fr}.campo-titulo{grid-column:1/-1}.principal{grid-column:1/-1}.tarea{grid-template-columns:auto 1fr}.acciones{grid-column:2}.barra input{max-width:none}}
+  </style>
+</head>
+<body>
+  <header><div><h1>Mi Agenda Personal</h1><p>Organiza tus actividades y compromisos diarios.</p></div></header>
+  <main>
+    <section class="panel">
+      <form id="formulario">
+        <div class="campo-titulo"><label for="titulo">Actividad</label><input id="titulo" maxlength="100" placeholder="Ej.: Reunión de seguridad" required></div>
+        <div><label for="fecha">Fecha máxima de plazo</label><input id="fecha" type="date" required></div>
+        <div><label for="hora">Hora</label><input id="hora" type="time" required></div>
+        <div><label for="prioridad">Prioridad</label><select id="prioridad"><option value="alta">Alta</option><option value="media" selected>Media</option><option value="baja">Baja</option></select></div>
+        <button class="principal" type="submit" id="guardar">Agregar</button>
+      </form>
+      <p class="nota">Los datos quedan guardados en este navegador, incluso después de cerrar la página.</p>
+    </section>
+    <section class="panel">
+      <div class="barra"><div><strong>Actividades</strong> <span class="contador" id="contador"></span></div><input id="buscar" type="search" placeholder="Buscar actividad..."></div>
+      <div id="lista"></div>
+    </section>
+  </main>
+  <script>
+    const CLAVE='mi_agenda_v1';
+    const $=id=>document.getElementById(id);
+    let tareas=JSON.parse(localStorage.getItem(CLAVE)||'[]');
+    let editando=null;
+
+    function guardar(){localStorage.setItem(CLAVE,JSON.stringify(tareas));renderizar()}
+    function escapar(texto){const d=document.createElement('div');d.textContent=texto;return d.innerHTML}
+    function fechaLegible(valor){return new Date(valor+'T00:00:00').toLocaleDateString('es-CL',{day:'2-digit',month:'2-digit',year:'numeric'})}
+    function plazo(tarea){
+      if(tarea.completa)return 'Actividad cumplida';
+      const hoy=new Date();hoy.setHours(0,0,0,0);
+      const limite=new Date(tarea.fecha+'T00:00:00');
+      const dias=Math.round((limite-hoy)/86400000);
+      if(dias<0)return `Plazo vencido hace ${Math.abs(dias)} ${Math.abs(dias)===1?'día':'días'}`;
+      if(dias===0)return 'El plazo vence hoy';
+      return `Faltan ${dias} ${dias===1?'día':'días'} para su cumplimiento`;
+    }
+    function renderizar(){
+      const filtro=$('buscar').value.trim().toLowerCase();
+      const nivel={alta:0,media:1,baja:2};
+      const visibles=tareas.filter(t=>t.titulo.toLowerCase().includes(filtro)).sort((a,b)=>{
+        if(a.completa!==b.completa)return a.completa?1:-1;
+        if(!a.completa&&nivel[a.prioridad]!==nivel[b.prioridad])return nivel[a.prioridad]-nivel[b.prioridad];
+        return (a.fecha+a.hora).localeCompare(b.fecha+b.hora);
+      });
+      $('contador').textContent=`(${tareas.filter(t=>!t.completa).length} pendientes)`;
+      $('lista').innerHTML=visibles.length?visibles.map(t=>`<article class="tarea ${t.prioridad} ${t.completa?'completa':''}"><input class="check" type="checkbox" ${t.completa?'checked':''} onchange="completar('${t.id}')" aria-label="Marcar actividad"><div><div class="titulo">${escapar(t.titulo)}</div><div class="meta">Fecha máxima: ${fechaLegible(t.fecha)} · ${t.hora} · Prioridad ${t.prioridad}</div><div class="meta"><strong>${plazo(t)}</strong></div></div><div class="acciones"><button onclick="editar('${t.id}')">Editar</button><button class="eliminar" onclick="eliminar('${t.id}')">Eliminar</button></div></article>`).join(''):'<div class="vacio">No hay actividades para mostrar.</div>';
+    }
+    $('formulario').addEventListener('submit',e=>{
+      e.preventDefault();
+      const datos={titulo:$('titulo').value.trim(),fecha:$('fecha').value,hora:$('hora').value,prioridad:$('prioridad').value};
+      if(editando){const i=tareas.findIndex(t=>t.id===editando);tareas[i]={...tareas[i],...datos};editando=null;$('guardar').textContent='Agregar'}
+      else tareas.push({id:crypto.randomUUID?crypto.randomUUID():Date.now().toString(),...datos,completa:false});
+      e.target.reset();$('fecha').value=new Date().toISOString().slice(0,10);guardar();
+    });
+    window.completar=id=>{const t=tareas.find(t=>t.id===id);t.completa=!t.completa;guardar()};
+    window.eliminar=id=>{if(confirm('¿Eliminar esta actividad?')){tareas=tareas.filter(t=>t.id!==id);guardar()}};
+    window.editar=id=>{const t=tareas.find(t=>t.id===id);$('titulo').value=t.titulo;$('fecha').value=t.fecha;$('hora').value=t.hora;$('prioridad').value=t.prioridad;editando=id;$('guardar').textContent='Guardar';scrollTo({top:0,behavior:'smooth'})};
+    $('buscar').addEventListener('input',renderizar);
+    $('fecha').value=new Date().toISOString().slice(0,10);renderizar();
+  </script>
+</body>
+</html>
