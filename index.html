@@ -41,6 +41,17 @@
 .mobile-nav{display:none}
 @media(max-width:900px){.filter-row{grid-template-columns:1fr}.period-controls{flex-wrap:wrap}.welcome-strip{grid-template-columns:1fr}.analysis-inner{padding:12px}.cloud-panel .toolbar{overflow-x:auto;flex-wrap:nowrap}.cloud-panel .toolbar button{white-space:nowrap}.notes-grid{gap:14px}}
 @media(max-width:760px){body{padding-bottom:72px}.topbar{position:static}.header-logo{width:40px;height:40px}.brand>span small{font-size:.75rem}.profile-pill b{display:none}.wrap{width:calc(100% - 20px)}.cloudbar{margin-top:8px}.page-heading{margin-top:14px}.page-heading>div:first-child .sub{display:none}.quick-actions{display:grid;grid-template-columns:1fr 1fr;width:100%}.quick-actions .btn{padding:11px 8px}.tabs{display:none}.mobile-nav{position:fixed;z-index:500;display:grid;grid-template-columns:repeat(3,1fr);left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--line);padding:6px max(8px,env(safe-area-inset-right)) calc(6px + env(safe-area-inset-bottom)) max(8px,env(safe-area-inset-left));box-shadow:0 -7px 24px #14263816}.mobile-nav .tab{display:flex;flex-direction:column;gap:1px;border:0;padding:5px;border-radius:8px;font-size:.72rem}.mobile-nav .tab.active{background:#eef3ff}.mobile-nav .tab-icon{font-size:1.1rem}.filter-shell{padding:11px}.period-tabs{display:grid;grid-template-columns:repeat(5,1fr);width:100%}.period-tabs button{padding:8px 4px;font-size:.75rem}.date-nav input{width:130px}.period-heading{flex-direction:row;align-items:center}.executive-metrics{grid-template-columns:1fr 1fr}.exec-metric{min-height:82px}.exec-metric strong{font-size:1.65rem}.welcome-strip{gap:10px}.quick-read{display:none}.focus-card{padding:14px}.focus-grid{grid-template-columns:repeat(3,1fr)}.analysis-details>summary{padding:13px}.analysis-inner{padding:10px}.task-filters{grid-template-columns:1fr}.task-filters>div:first-child{grid-column:auto}.task-filters button{width:100%}.pencil-panel>summary{padding:11px}.drawing-body{grid-template-columns:60px minmax(0,1fr)}.drawing-tools{gap:5px}.tool{font-size:.66rem;min-height:43px}.tool>span{font-size:1.15rem}.canvas-status{font-size:.7rem}.notes-grid #noteItems{grid-template-columns:1fr}.areas-table th:nth-child(2),.areas-table td:nth-child(2),.areas-table th:nth-child(4),.areas-table td:nth-child(4){display:none}}
+.page-heading{display:grid;grid-template-columns:minmax(245px,1fr) auto;align-items:center;gap:18px}
+.header-action-zone{display:flex;align-items:stretch;justify-content:flex-end;gap:9px;min-width:0}
+.header-action-zone .quick-actions{flex-wrap:nowrap}
+.header-action-zone .quick-actions .btn{min-height:68px;padding-inline:15px;white-space:nowrap}
+.header-metrics{display:grid!important;grid-template-columns:repeat(4,minmax(102px,1fr))!important;gap:8px!important;margin:0!important}
+.header-metrics .exec-metric{min-width:102px;min-height:68px;padding:8px 10px;border-radius:10px}
+.header-metrics .exec-metric>span{font-size:.72rem}
+.header-metrics .exec-metric strong{font-size:1.45rem;margin:3px 0 0}
+.header-metrics .exec-metric small{display:none}
+@media(max-width:1180px){.page-heading{grid-template-columns:1fr}.header-action-zone{justify-content:space-between}.header-metrics{flex:1}.header-action-zone .quick-actions .btn{min-height:64px}}
+@media(max-width:760px){.page-heading{grid-template-columns:1fr}.header-action-zone{display:grid;grid-template-columns:1fr;width:100%}.header-metrics{grid-template-columns:1fr 1fr!important}.header-metrics .exec-metric{min-width:0;min-height:72px}.header-action-zone .quick-actions .btn{min-height:44px}}
 </style>
 </head>
 <body>
@@ -62,7 +73,12 @@
     <div class="wrap cloudbar"><details class="cloud-panel"><summary><span class="sync-dot" aria-hidden="true"></span><strong id="cloudStatus" role="status">Conectando…</strong></summary>
     <div class="toolbar"><button id="syncBtn" class="btn secondary small">↻ Sincronizar ahora</button><button id="backupBtn" class="btn secondary small">↓ Descargar respaldo</button><button id="importLocalBtn" class="btn secondary small">📲 Recuperar datos del dispositivo</button><button id="resolveBtn" class="btn danger small hidden">Revisar conflicto</button></div></details></div>
     <main class="wrap">
-      <div class="page-heading"><div><p id="todayLabel" class="eyebrow"></p><h1 id="welcomeTitle">Organiza lo importante.</h1><p class="sub">Primero lo urgente; el detalle queda a un toque.</p></div><div class="quick-actions"><button id="quickTask" class="btn">+ Agregar tarea</button><button id="quickNote" class="btn secondary">✎ Tomar nota</button></div></div>
+      <div class="page-heading"><div><p id="todayLabel" class="eyebrow"></p><h1 id="welcomeTitle">Organiza lo importante.</h1><p class="sub">Primero lo urgente; el detalle queda a un toque.</p></div><div class="header-action-zone"><div class="quick-actions"><button id="quickTask" class="btn">+ Agregar tarea</button><button id="quickNote" class="btn secondary">✎ Tomar nota</button></div><div class="executive-metrics header-metrics" aria-label="Resumen de tareas">
+        <button class="exec-metric red" data-drill="urgent"><span>Vencidas <i>›</i></span><strong id="kLate">0</strong><small>Plazo superado</small></button>
+        <button class="exec-metric blue" data-drill="open"><span>Pendientes <i>›</i></span><strong id="kOpen">0</strong><small>Por completar</small></button>
+        <button class="exec-metric green" data-drill="done"><span>Completadas <i>›</i></span><strong id="kDone">0</strong><small id="kDoneDetail">Avance</small></button>
+        <button class="exec-metric" data-drill="all"><span>Total <i>›</i></span><strong id="kTotal">0</strong><small id="kTotalDetail">Del período</small></button>
+      </div></div></div>
       <nav class="tabs" aria-label="Secciones"><button class="tab active" data-tab="overview"><span class="tab-icon">⌂</span>Inicio</button><button class="tab" data-tab="agenda"><span class="tab-icon">☷</span>Tareas</button><button class="tab" data-tab="notes"><span class="tab-icon">✎</span>Notas</button></nav>
       <div class="filter-shell"><div class="filter-row"><div><span class="filter-label">Área</span><div class="area-tabs" aria-label="Filtrar por área"><button data-area="all" class="active">Todas</button><button data-area="personal">◉ Personal</button><button data-area="projects">◇ Proyectos</button><button data-area="work">▣ Trabajo</button><button data-area="other">⋯ Otros</button></div></div>
       <div id="periodControls"><span class="filter-label">Período</span><div class="period-controls"><div class="period-tabs" aria-label="Período"><button data-period="day">Día</button><button data-period="week" class="active">Semana</button><button data-period="month">Mes</button><button data-period="year">Año</button><button data-period="all">Todo</button></div><div class="date-nav"><button id="prevPeriod" class="nav-btn" aria-label="Período anterior">‹</button><label for="anchorDate" class="sr-only">Fecha de referencia</label><input type="date" id="anchorDate"><button id="nextPeriod" class="nav-btn" aria-label="Período siguiente">›</button><button id="todayBtn" class="btn secondary small">Hoy</button></div></div></div></div>
@@ -70,12 +86,7 @@
       <section id="overviewPanel">
         <div class="welcome-strip">
           <article class="card focus-card"><div class="head-row"><div><h2>Qué necesita tu atención</h2><p class="sub">Tus pendientes más importantes, sin perder tiempo buscando.</p></div><span class="capsule">Ahora</span></div><div id="globalFocus"></div><div id="nextActions"></div></article>
-          <div class="welcome-side"><div class="executive-metrics">
-            <button class="exec-metric red" data-drill="urgent"><span>Vencidas <i>›</i></span><strong id="kLate">0</strong><small>Plazo superado</small></button>
-            <button class="exec-metric blue" data-drill="open"><span>Pendientes <i>›</i></span><strong id="kOpen">0</strong><small>Por completar</small></button>
-            <button class="exec-metric green" data-drill="done"><span>Completadas <i>›</i></span><strong id="kDone">0</strong><small id="kDoneDetail">Avance</small></button>
-            <button class="exec-metric" data-drill="all"><span>Total <i>›</i></span><strong id="kTotal">0</strong><small id="kTotalDetail">Del período</small></button>
-          </div><article class="card quick-read"><h2>Lectura rápida</h2><p>Empieza por las vencidas y las que vencen hoy.</p><p>Después continúa con prioridad alta.</p><button class="btn small" data-drill="open">Ver mis tareas pendientes</button></article></div>
+          <article class="card quick-read"><h2>Lectura rápida</h2><p>Empieza por las vencidas y las que vencen hoy.</p><p>Después continúa con prioridad alta.</p><button class="btn small" data-drill="open">Ver mis tareas pendientes</button></article>
         </div>
         <details class="analysis-details"><summary>Análisis completo del período</summary><div class="analysis-inner">
         <div class="executive-grid">
