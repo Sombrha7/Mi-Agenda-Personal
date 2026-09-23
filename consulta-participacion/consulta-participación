@@ -1,1 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
 
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="description"
+    content="Sistema de Consulta y Participación de los Trabajadores - ESM"
+  >
+
+  <title>Consulta y Participación | ESM</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap"
+    rel="stylesheet"
+  >
+
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+
+  <header class="header">
+    <div class="header-container">
+
+      <img
+        src="assets/logo-esm.png"
+        alt="ESM - Empresa Soluciones Mineras"
+        class="logo"
+      >
+
+      <div class="header-text">
+        <span>Sistema SSMA</span>
+      </div>
+
+    </div>
+  </header>
+
+
+  <main>
+
+    <section class="hero">
+
+      <div class="hero-content">
+
+        <div class="badge">
+          SEGURIDAD Y SALUD EN EL TRABAJO
+        </div>
+
+        <h1>
+          Consulta y Participación
+          <span>de los Trabajadores</span>
+        </h1>
+
+        <p class="hero-description">
+          Informa condiciones, acciones, oportunidades de mejora
+          o sugerencias relacionadas con Seguridad y Salud en el Trabajo.
+        </p>
+
+
+        <div class="actions">
+
+          <a
+            href="#"
+            class="btn btn-primary"
+            id="btnNuevoReporte"
+          >
+            <span class="btn-icon">＋</span>
+
+            <span>
+              <strong>Realizar un reporte</strong>
+              <small>Registrar una nueva observación</small>
+            </span>
+          </a>
+
+
+          <a
+            href="#"
+            class="btn btn-secondary"
+            id="btnConsultar"
+          >
+            <span class="btn-icon">⌕</span>
+
+            <span>
+              <strong>Consultar mi reporte</strong>
+              <small>Revisar estado y retroalimentación</small>
+            </span>
+          </a>
+
+        </div>
+
+
+        <div class="info-box">
+
+          <div class="info-icon">i</div>
+
+          <p>
+            Tu participación contribuye a identificar peligros,
+            mejorar las condiciones de trabajo y fortalecer
+            nuestra gestión preventiva.
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <footer>
+
+    <p>
+      ESM · Empresa Soluciones Mineras
+    </p>
+
+    <span>
+      Sistema de Gestión de Seguridad y Salud en el Trabajo
+    </span>
+
+  </footer>
+
+
+  <script src="js/app.js"></script>
+
+</body>
+</html>
