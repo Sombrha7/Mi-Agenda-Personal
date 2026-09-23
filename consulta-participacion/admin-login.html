@@ -538,15 +538,58 @@
 
 </footer>
 
+<script type="module">
 
-<script>
+  import { createClient }
+  from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+
+
+  /* ==========================================
+     CONEXIÓN SUPABASE
+  ========================================== */
+
+  const SUPABASE_URL =
+    "https://sbaasbxflxtolguduzkp.supabase.co";
+
+
+  const SUPABASE_KEY =
+    "sb_publishable_qeMGZUxT6VzUkpjKQm76WQ_yXwHBgnH";
+
+
+  const supabase =
+    createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY
+    );
+
+
+  /* ==========================================
+     ELEMENTOS DEL FORMULARIO
+  ========================================== */
 
   const passwordInput =
     document.getElementById("password");
 
+
   const togglePassword =
     document.getElementById("togglePassword");
 
+
+  const message =
+    document.getElementById("message");
+
+
+  const loginForm =
+    document.getElementById("loginForm");
+
+
+  const boton =
+    document.querySelector(".btn-login");
+
+
+  /* ==========================================
+     MOSTRAR / OCULTAR CONTRASEÑA
+  ========================================== */
 
   togglePassword.addEventListener(
     "click",
@@ -555,11 +598,13 @@
       if (passwordInput.type === "password") {
 
         passwordInput.type = "text";
+
         togglePassword.textContent = "🙈";
 
       } else {
 
         passwordInput.type = "password";
+
         togglePassword.textContent = "👁";
 
       }
@@ -568,39 +613,269 @@
   );
 
 
-  document
-    .getElementById("loginForm")
-    .addEventListener(
-      "submit",
-      function(event) {
+  /* ==========================================
+     INICIAR SESIÓN
+  ========================================== */
 
-        event.preventDefault();
+  loginForm.addEventListener(
+    "submit",
+    async function(event) {
+
+      event.preventDefault();
+
+
+      const email =
+        document
+          .getElementById("email")
+          .value
+          .trim();
+
+
+      const password =
+        passwordInput.value;
+
+
+      /* LIMPIAR MENSAJE */
+
+      message.className =
+        "message";
+
+      message.style.display =
+        "none";
+
+
+      /* BOTÓN EN MODO ESPERA */
+
+      boton.disabled = true;
+
+      boton.textContent =
+        "Verificando...";
+
+
+      try {
+
+
+        /* ======================================
+           1. VALIDAR CORREO Y CONTRASEÑA
+        ====================================== */
+
+        const {
+          data,
+          error
+        } =
+          await supabase.auth.signInWithPassword({
+
+            email: email,
+
+            password: password
+
+          });
+
+
+        if (error) {
+
+          throw error;
+
+        }
+
+
+        if (!data.user) {
+
+          throw new Error(
+            "No fue posible validar el usuario."
+          );
+
+        }
+
+
+        /* ======================================
+           2. CONSULTAR PERFIL SSMA
+        ====================================== */
+
+        const {
+          data: perfil,
+          error: perfilError
+        } =
+          await supabase
+            .from("cp_perfiles")
+            .select(
+              "nombre, rol, activo"
+            )
+            .single();
+
+
+        if (perfilError) {
+
+          await supabase.auth.signOut();
+
+          throw new Error(
+            "Tu cuenta no tiene un perfil SSMA autorizado."
+          );
+
+        }
+
+
+        if (!perfil.activo) {
+
+          await supabase.auth.signOut();
+
+          throw new Error(
+            "Tu cuenta SSMA se encuentra deshabilitada."
+          );
+
+        }
+
+
+        /* ======================================
+           3. CONSULTAR FAENAS AUTORIZADAS
+        ====================================== */
+
+        const {
+          data: faenas,
+          error: faenasError
+        } =
+          await supabase
+            .from("cp_faenas")
+            .select(
+              "id, nombre"
+            );
+
+
+        if (faenasError) {
+
+          throw faenasError;
+
+        }
+
+
+        if (!faenas || faenas.length === 0) {
+
+          await supabase.auth.signOut();
+
+          throw new Error(
+            "Tu usuario no tiene faenas asignadas."
+          );
+
+        }
+
+
+        const nombresFaenas =
+          faenas.map(
+            item => item.nombre
+          );
+
+
+        /* ======================================
+           4. ACCESO CORRECTO
+        ====================================== */
+
+        message.style.display =
+          "block";
+
+        message.style.background =
+          "#EAF6EE";
+
+        message.style.color =
+          "#17733A";
+
+        message.style.border =
+          "1px solid #B7DFC5";
+
+        message.style.padding =
+          "12px";
+
+        message.style.borderRadius =
+          "10px";
+
+
+        message.textContent =
+          "Acceso correcto. Usuario: "
+          + perfil.nombre
+          + " | Acceso: "
+          + nombresFaenas.join(", ");
+
+
+        console.log(
+          "Usuario autenticado:",
+          data.user.email
+        );
+
+
+        console.log(
+          "Perfil:",
+          perfil
+        );
+
+
+        console.log(
+          "Faenas autorizadas:",
+          faenas
+        );
 
 
         /*
-          IMPORTANTE:
+          TODAVÍA NO REDIRECCIONAMOS.
 
-          Aquí NO se colocará ninguna contraseña
-          dentro del código.
-
-          En el siguiente paso conectaremos
-          este formulario con Supabase Auth.
+          Cuando comprobemos que funciona,
+          crearemos admin.html y enviaremos
+          al usuario automáticamente
+          al panel de administración.
         */
 
 
-        const message =
-          document.getElementById("message");
+      } catch (error) {
 
+
+        /* ======================================
+           ERROR
+        ====================================== */
 
         message.className =
           "message error";
 
+        message.style.display =
+          "block";
 
-        message.textContent =
-          "El acceso todavía no está conectado. En el siguiente paso configuraremos Supabase Auth.";
+
+        const textoError =
+          error.message
+            ? error.message.toLowerCase()
+            : "";
+
+
+        if (
+          textoError.includes("invalid login")
+          ||
+          textoError.includes("invalid credentials")
+        ) {
+
+          message.textContent =
+            "Correo o contraseña incorrectos.";
+
+        } else {
+
+          message.textContent =
+            error.message ||
+            "No fue posible iniciar sesión.";
+
+        }
+
+
+      } finally {
+
+
+        /* RESTAURAR BOTÓN */
+
+        boton.disabled =
+          false;
+
+        boton.textContent =
+          "Iniciar sesión";
 
       }
-    );
+
+    }
+  );
 
 </script>
 
