@@ -581,8 +581,7 @@
     </h1>
 
     <p class="subtitle">
-      Ingresa el número de reporte y tu código de seguimiento
-      para revisar el estado de la gestión.
+      Ingresa tu número de reporte para revisar el estado de la gestión.
     </p>
 
   </section>
@@ -595,46 +594,32 @@
       Seguimiento del reporte
     </h2>
 
-    <p class="card-description">
-      Estos datos serán entregados automáticamente
-      cuando realices un nuevo reporte.
-    </p>
+<p class="card-description">
+  Este número será entregado automáticamente
+  cuando realices un nuevo reporte.
+</p>
 
+<div class="field">
 
-    <div class="field">
+  <label for="numeroReporte">
+    N.º de reporte
+  </label>
 
-      <label for="numeroReporte">
-        N.º de reporte
-      </label>
+  <input
+    type="text"
+    id="numeroReporte"
+    placeholder="Ej.: 027"
+    inputmode="numeric"
+    pattern="[0-9]{3}"
+    maxlength="3"
+    autocomplete="off"
+  >
 
-      <input
-        type="text"
-        id="numeroReporte"
-        placeholder="Ej.: CP-2026-00001"
-        autocomplete="off"
-      >
+  <div class="hint">
+    Ingresa los 3 dígitos entregados al momento de realizar tu reporte.
+  </div>
 
-    </div>
-
-
-    <div class="field">
-
-      <label for="codigoSeguimiento">
-        Código de seguimiento
-      </label>
-
-      <input
-        type="text"
-        id="codigoSeguimiento"
-        placeholder="Ej.: 7F92K4X8"
-        autocomplete="off"
-      >
-
-      <div class="hint">
-        El código es personal y permite consultar únicamente tu reporte.
-      </div>
-
-    </div>
+</div>
 
 
     <button
@@ -667,9 +652,9 @@
             N.º reporte
           </span>
 
-          <strong>
-            CP-2026-00001
-          </strong>
+         <strong id="resultadoNumero">
+  027
+</strong>
 
         </div>
 
@@ -779,11 +764,13 @@
     </div>
 
     <p>
-      La consulta permite visualizar el estado del reporte,
-      las acciones informadas y la retroalimentación registrada.
-      La edición y cierre están disponibles únicamente para
-      usuarios SSMA autorizados.
-    </p>
+<p>
+  Ingresa el número entregado al generar tu reporte.
+  Podrás revisar su estado, acciones informadas y
+  retroalimentación registrada.
+  La edición y cierre están disponibles únicamente
+  para usuarios SSMA autorizados.
+</p>
 
   </div>
 
@@ -805,29 +792,22 @@
 
   function consultarReporte() {
 
-    const numero =
-      document
-        .getElementById("numeroReporte")
-        .value
-        .trim();
+  const numero =
+    document
+      .getElementById("numeroReporte")
+      .value
+      .trim();
 
 
-    const codigo =
-      document
-        .getElementById("codigoSeguimiento")
-        .value
-        .trim();
+  if (!/^(?!000)\d{3}$/.test(numero)) {
 
+    alert(
+      "Ingresa un número de reporte válido de 3 dígitos. Ejemplo: 027."
+    );
 
-    if (!numero || !codigo) {
+    return;
 
-      alert(
-        "Ingresa el número de reporte y el código de seguimiento."
-      );
-
-      return;
-
-    }
+  }
 
 
     /*
@@ -836,10 +816,13 @@
       En el siguiente paso esta función
       consultará Supabase utilizando:
 
-      N.º reporte + código privado.
+      N.º de reporte.
     */
 
-
+document
+  .getElementById("resultadoNumero")
+  .textContent = numero;
+    
     document
       .getElementById("resultado")
       .classList
