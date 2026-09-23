@@ -216,7 +216,7 @@
 
     .type-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       gap: 14px;
     }
 
@@ -249,6 +249,31 @@
       font-size: 27px;
       margin-bottom: 7px;
     }
+    .iso-badge {
+  width: 52px;
+  height: 52px;
+
+  border-radius: 50%;
+
+  background: #0B63B6;
+  color: white;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  line-height: 1;
+  font-size: 11px;
+  font-weight: 900;
+
+  text-align: center;
+}
+
+.iso-badge small {
+  font-size: 9px;
+  font-weight: 700;
+}
 
     .type-option label strong {
       font-size: 16px;
@@ -579,31 +604,25 @@
 
           <select id="faena" required>
 
-            <option value="">
-              Seleccione una faena
-            </option>
+  <option value="">
+    Seleccione una faena
+  </option>
 
-            <option value="Antofagasta">
-              Antofagasta
-            </option>
+  <option value="C20+">C20+</option>
+  <option value="Quebrada Blanca">Quebrada Blanca</option>
+  <option value="Escondida">Escondida</option>
+  <option value="FCAB">FCAB</option>
+  <option value="Lomas Bayas">Lomas Bayas</option>
+  <option value="Centinela">Centinela</option>
+  <option value="Chuquicamata">Chuquicamata</option>
+  <option value="Spence">Spence</option>
+  <option value="Collahuasi CMDIC">Collahuasi CMDIC</option>
+  <option value="Mantenimiento">Mantenimiento</option>
+  <option value="Overhead">Overhead</option>
+  <option value="Pelambres">Pelambres</option>
+  <option value="Lomas Bayas LB">Lomas Bayas LB</option>
 
-            <option value="Mejillones">
-              Mejillones
-            </option>
-
-            <option value="Baquedano">
-              Baquedano
-            </option>
-
-            <option value="Prat">
-              Prat
-            </option>
-
-            <option value="Otra">
-              Otra
-            </option>
-
-          </select>
+</select>
 
         </div>
 
@@ -643,6 +662,75 @@
 
 
       <div class="type-grid">
+
+  <div class="type-option">
+
+    <input
+      type="radio"
+      name="tipo"
+      id="seguridad"
+      value="Seguridad"
+    >
+
+    <label for="seguridad">
+      <span>🪖</span>
+      <strong>Seguridad</strong>
+    </label>
+
+  </div>
+
+
+  <div class="type-option">
+
+    <input
+      type="radio"
+      name="tipo"
+      id="salud"
+      value="Salud"
+    >
+
+    <label for="salud">
+      <span>❤</span>
+      <strong>Salud</strong>
+    </label>
+
+  </div>
+
+
+  <div class="type-option">
+
+    <input
+      type="radio"
+      name="tipo"
+      id="sistemaGestion"
+      value="Sistema de gestión"
+    >
+
+    <label for="sistemaGestion">
+      <span class="iso-badge">ISO<br><small>45001</small></span>
+      <strong>Sistema de gestión</strong>
+    </label>
+
+  </div>
+
+
+  <div class="type-option">
+
+    <input
+      type="radio"
+      name="tipo"
+      id="sugerencia"
+      value="Sugerencia"
+    >
+
+    <label for="sugerencia">
+      <span>💡</span>
+      <strong>Sugerencia / Mejora</strong>
+    </label>
+
+  </div>
+
+</div>
 
         <div class="type-option">
 
