@@ -1258,6 +1258,8 @@
 </footer>
 
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
 
   const seguridad =
@@ -1322,40 +1324,231 @@ sistemaGestion.addEventListener(
     actualizarOpciones
   );
 
+const SUPABASE_URL =
+  "https://sbaasbxflxtolguduzkp.supabase.co";
 
-  document
-    .getElementById("reporteForm")
-    .addEventListener(
-      "submit",
-      function(event) {
+const SUPABASE_KEY =
+  "sb_publishable_qeMGZUxT6VzUkpjKQm76WQ_yXwHBgnH";
 
-        event.preventDefault();
+const supabaseClient =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
+
+document
+  .getElementById("reporteForm")
+  .addEventListener(
+    "submit",
+    async function(event) {
+
+      event.preventDefault();
 
 
-        const tipo =
-          document.querySelector(
-            'input[name="tipo"]:checked'
+      const tipo =
+        document.querySelector(
+          'input[name="tipo"]:checked'
+        );
+
+
+      if (!tipo) {
+
+        alert(
+          "Selecciona Seguridad, Salud, Sistema de gestión o Sugerencia / Mejora."
+        );
+
+        return;
+      }
+
+
+      const nombre =
+        document.getElementById("nombre").value.trim();
+
+      const rut =
+        document.getElementById("rut").value.trim();
+
+      const cargo =
+        document.getElementById("cargo").value.trim();
+
+      const faena =
+        document.getElementById("faena").value;
+
+      const lugar =
+        document.getElementById("lugar").value.trim();
+
+      const descripcion =
+        document.getElementById("descripcion").value.trim();
+
+
+      let contenedorDetalles = null;
+
+
+      if (tipo.value === "Seguridad") {
+
+        contenedorDetalles =
+          document.getElementById(
+            "opcionesSeguridad"
+          );
+
+      }
+
+
+      if (tipo.value === "Salud") {
+
+        contenedorDetalles =
+          document.getElementById(
+            "opcionesSalud"
+          );
+
+      }
+
+
+      if (tipo.value === "Sistema de gestión") {
+
+        contenedorDetalles =
+          document.getElementById(
+            "opcionesSistemaGestion"
+          );
+
+      }
+
+
+      let detalles = [];
+
+
+      if (contenedorDetalles) {
+
+        const seleccionados =
+          contenedorDetalles.querySelectorAll(
+            'input[type="checkbox"]:checked'
           );
 
 
-        if (!tipo) {
-
-          alert(
-           "Selecciona Seguridad, Salud, Sistema de gestión o Sugerencia / Mejora."
+        detalles =
+          Array.from(seleccionados).map(
+            checkbox =>
+              checkbox
+                .closest("label")
+                .querySelector("span")
+                .textContent
+                .trim()
           );
 
-          return;
+      }
+
+
+      const boton =
+        document.querySelector(".btn-primary");
+
+
+      boton.disabled = true;
+      boton.textContent = "Enviando...";
+
+
+      try {
+
+
+        const {
+          data,
+          error
+        } =
+          await supabaseClient.rpc(
+            "cp_crear_reporte_publico",
+            {
+
+              p_nombre: nombre,
+
+              p_rut: rut,
+
+              p_cargo: cargo,
+
+              p_faena: faena,
+
+              p_lugar: lugar,
+
+              p_tipo: tipo.value,
+
+              p_detalles: detalles,
+
+              p_descripcion: descripcion
+
+            }
+          );
+
+
+        if (error) {
+
+          throw error;
 
         }
 
 
+        if (!data || data.length === 0) {
+
+          throw new Error(
+            "Supabase no devolvió el número del reporte."
+          );
+
+        }
+
+
+        const numero =
+          data[0].numero_reporte;
+
+
         alert(
-          "Formulario funcionando correctamente. El próximo paso será conectarlo con Supabase."
+          "✅ REPORTE ENVIADO CORRECTAMENTE\n\n"
+          + "N.º de reporte: "
+          + numero
+          + "\n\n"
+          + "Guarda este número para consultar posteriormente el estado de tu reporte."
         );
 
-      }
-    );
 
+        document
+          .getElementById("reporteForm")
+          .reset();
+
+
+        opcionesSeguridad
+          .classList
+          .remove("active");
+
+        opcionesSalud
+          .classList
+          .remove("active");
+
+        opcionesSistemaGestion
+          .classList
+          .remove("active");
+
+
+      } catch (error) {
+
+
+        console.error(
+          "Error al enviar reporte:",
+          error
+        );
+
+
+        alert(
+          "No fue posible enviar el reporte.\n\n"
+          + error.message
+        );
+
+
+      } finally {
+
+
+        boton.disabled = false;
+        boton.textContent = "Enviar reporte";
+
+      }
+
+    }
+  );
+  
 </script>
 
 
