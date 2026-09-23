@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="theme-color"
+    content="#004A97"
+  >
+
+  <title>Consultar Reporte | ESM</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap"
+    rel="stylesheet"
+  >
+
+  <style>
+
+    :root {
+      --esm-blue: #004A97;
+      --esm-blue-80: #546EAB;
+      --esm-blue-60: #7F92C0;
+      --esm-blue-40: #AAB7D5;
+      --esm-blue-20: #D4DBEA;
+
+      --gray-dark: #67656C;
+      --gray: #7F8084;
+
+      --background: #F5F7FA;
+      --white: #FFFFFF;
+      --border: #E2E7ED;
+
+      --text: #282C31;
+    }
+
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+
+    body {
+      min-height: 100vh;
+
+      font-family: "Lato", Arial, sans-serif;
+
+      background: var(--background);
+      color: var(--text);
+
+      display: flex;
+      flex-direction: column;
+    }
+
+
+    /* ==============================
+       CABECERA
+    ============================== */
+
+    header {
+      background: white;
+      border-bottom: 1px solid var(--border);
+    }
+
+
+    .header-container {
+      width: min(1100px, 92%);
+      height: 78px;
+
+      margin: auto;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+
+    .logo {
+      width: 135px;
+      height: auto;
+      display: block;
+    }
+
+
+    .back {
+      color: var(--esm-blue);
+
+      text-decoration: none;
+
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+
+    /* ==============================
+       CONTENIDO
+    ============================== */
+
+    main {
+      flex: 1;
+
+      width: min(720px, 92%);
+
+      margin: 45px auto 65px;
+    }
+
+
+    .intro {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+
+    .tag {
+      display: inline-block;
+
+      background: var(--esm-blue-20);
+      color: var(--esm-blue);
+
+      padding: 7px 14px;
+
+      border-radius: 30px;
+
+      font-size: 10px;
+      font-weight: 900;
+
+      letter-spacing: 1px;
+
+      margin-bottom: 14px;
+    }
+
+
+    h1 {
+      color: var(--esm-blue);
+
+      font-size: 38px;
+      font-weight: 900;
+
+      margin-bottom: 10px;
+    }
+
+
+    .subtitle {
+      color: var(--gray-dark);
+
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+
+    /* ==============================
+       TARJETA CONSULTA
+    ============================== */
+
+    .card {
+      background: white;
+
+      border: 1px solid var(--border);
+
+      border-radius: 20px;
+
+      padding: 30px;
+
+      box-shadow:
+        0 10px 30px rgba(0, 74, 151, 0.06);
+    }
+
+
+    .card-title {
+      color: var(--esm-blue);
+
+      font-size: 19px;
+      font-weight: 900;
+
+      margin-bottom: 6px;
+    }
+
+
+    .card-description {
+      color: var(--gray);
+
+      font-size: 13px;
+      line-height: 1.5;
+
+      margin-bottom: 24px;
+    }
+
+
+    .field {
+      margin-bottom: 18px;
+    }
+
+
+    label {
+      display: block;
+
+      color: var(--gray-dark);
+
+      font-size: 13px;
+      font-weight: 700;
+
+      margin-bottom: 7px;
+    }
+
+
+    input {
+      width: 100%;
+
+      padding: 14px 15px;
+
+      border: 1px solid #CBD4DE;
+
+      border-radius: 11px;
+
+      font-family: "Lato", Arial, sans-serif;
+      font-size: 15px;
+
+      outline: none;
+
+      transition: 0.2s;
+    }
+
+
+    input:focus {
+      border-color: var(--esm-blue);
+
+      box-shadow:
+        0 0 0 3px rgba(0, 74, 151, 0.08);
+    }
+
+
+    .hint {
+      color: var(--gray);
+
+      font-size: 11px;
+
+      margin-top: 6px;
+    }
+
+
+    /* ==============================
+       BOTÓN CONSULTAR
+    ============================== */
+
+    .btn-consultar {
+      width: 100%;
+
+      border: none;
+
+      background: var(--esm-blue);
+      color: white;
+
+      border-radius: 11px;
+
+      padding: 15px;
+
+      font-family: "Lato", Arial, sans-serif;
+
+      font-size: 15px;
+      font-weight: 900;
+
+      cursor: pointer;
+
+      margin-top: 4px;
+
+      box-shadow:
+        0 8px 22px rgba(0, 74, 151, 0.18);
+    }
+
+
+    .btn-consultar:hover {
+      background: #003E80;
+    }
+
+
+    /* ==============================
+       RESULTADO
+    ============================== */
+
+    .resultado {
+      display: none;
+
+      margin-top: 25px;
+
+      border-top: 1px solid var(--border);
+
+      padding-top: 24px;
+    }
+
+
+    .resultado.active {
+      display: block;
+    }
+
+
+    .estado {
+      display: inline-block;
+
+      padding: 7px 13px;
+
+      border-radius: 30px;
+
+      background: var(--esm-blue-20);
+
+      color: var(--esm-blue);
+
+      font-size: 11px;
+      font-weight: 900;
+
+      margin-bottom: 16px;
+    }
+
+
+    .resultado-grid {
+      display: grid;
+
+      grid-template-columns: 1fr 1fr;
+
+      gap: 16px;
+    }
+
+
+    .dato {
+      padding: 13px;
+
+      border: 1px solid var(--border);
+
+      border-radius: 10px;
+    }
+
+
+    .dato span {
+      display: block;
+
+      color: var(--gray);
+
+      font-size: 10px;
+
+      text-transform: uppercase;
+
+      margin-bottom: 5px;
+    }
+
+
+    .dato strong {
+      color: var(--text);
+
+      font-size: 14px;
+    }
+
+
+    /* ==============================
+       ACCESO ADMIN
+    ============================== */
+
+    .admin-area {
+      margin-top: 24px;
+
+      text-align: center;
+    }
+
+
+    .divider {
+      display: flex;
+
+      align-items: center;
+
+      gap: 15px;
+
+      color: var(--gray);
+
+      font-size: 11px;
+
+      margin-bottom: 18px;
+    }
+
+
+    .divider::before,
+    .divider::after {
+      content: "";
+
+      flex: 1;
+
+      height: 1px;
+
+      background: var(--border);
+    }
+
+
+    .admin-link {
+      display: inline-flex;
+
+      align-items: center;
+
+      gap: 8px;
+
+      color: var(--esm-blue);
+
+      text-decoration: none;
+
+      font-size: 13px;
+      font-weight: 700;
+
+      padding: 10px 16px;
+
+      border-radius: 10px;
+
+      transition: 0.2s;
+    }
+
+
+    .admin-link:hover {
+      background: var(--esm-blue-20);
+    }
+
+
+    .admin-icon {
+      font-size: 16px;
+    }
+
+
+    /* ==============================
+       INFORMACIÓN
+    ============================== */
+
+    .info {
+      margin-top: 22px;
+
+      padding: 17px;
+
+      border: 1px solid var(--border);
+
+      border-radius: 14px;
+
+      background: white;
+
+      display: flex;
+
+      gap: 12px;
+
+      align-items: flex-start;
+    }
+
+
+    .info-icon {
+      width: 28px;
+      height: 28px;
+
+      min-width: 28px;
+
+      border-radius: 50%;
+
+      background: var(--esm-blue);
+      color: white;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+
+    .info p {
+      color: var(--gray-dark);
+
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+
+    /* ==============================
+       PIE
+    ============================== */
+
+    footer {
+      background: white;
+
+      border-top: 1px solid var(--border);
+
+      padding: 20px;
+
+      text-align: center;
+
+      color: var(--gray);
+
+      font-size: 11px;
+    }
+
+
+    /* ==============================
+       CELULAR
+    ============================== */
+
+    @media (max-width: 600px) {
+
+      .header-container {
+        height: 68px;
+      }
+
+
+      .logo {
+        width: 110px;
+      }
+
+
+      main {
+        margin-top: 28px;
+      }
+
+
+      h1 {
+        font-size: 30px;
+      }
+
+
+      .card {
+        padding: 22px;
+      }
+
+
+      .resultado-grid {
+        grid-template-columns: 1fr;
+      }
+
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+  <div class="header-container">
+
+    <img
+      src="assets/logo-esm.png"
+      alt="ESM"
+      class="logo"
+    >
+
+    <a
+      href="index.html"
+      class="back"
+    >
+      ← Volver al inicio
+    </a>
+
+  </div>
+
+</header>
+
+
+<main>
+
+
+  <section class="intro">
+
+    <div class="tag">
+      CONSULTA Y PARTICIPACIÓN
+    </div>
+
+    <h1>
+      Consultar mi reporte
+    </h1>
+
+    <p class="subtitle">
+      Ingresa el número de reporte y tu código de seguimiento
+      para revisar el estado de la gestión.
+    </p>
+
+  </section>
+
+
+
+  <section class="card">
+
+    <h2 class="card-title">
+      Seguimiento del reporte
+    </h2>
+
+    <p class="card-description">
+      Estos datos serán entregados automáticamente
+      cuando realices un nuevo reporte.
+    </p>
+
+
+    <div class="field">
+
+      <label for="numeroReporte">
+        N.º de reporte
+      </label>
+
+      <input
+        type="text"
+        id="numeroReporte"
+        placeholder="Ej.: CP-2026-00001"
+        autocomplete="off"
+      >
+
+    </div>
+
+
+    <div class="field">
+
+      <label for="codigoSeguimiento">
+        Código de seguimiento
+      </label>
+
+      <input
+        type="text"
+        id="codigoSeguimiento"
+        placeholder="Ej.: 7F92K4X8"
+        autocomplete="off"
+      >
+
+      <div class="hint">
+        El código es personal y permite consultar únicamente tu reporte.
+      </div>
+
+    </div>
+
+
+    <button
+      type="button"
+      class="btn-consultar"
+      onclick="consultarReporte()"
+    >
+      Consultar reporte
+    </button>
+
+
+
+    <!-- RESULTADO DE PRUEBA -->
+
+    <div
+      id="resultado"
+      class="resultado"
+    >
+
+      <div class="estado">
+        EN GESTIÓN
+      </div>
+
+
+      <div class="resultado-grid">
+
+        <div class="dato">
+
+          <span>
+            N.º reporte
+          </span>
+
+          <strong>
+            CP-2026-00001
+          </strong>
+
+        </div>
+
+
+        <div class="dato">
+
+          <span>
+            Fecha
+          </span>
+
+          <strong>
+            23/09/2026
+          </strong>
+
+        </div>
+
+
+        <div class="dato">
+
+          <span>
+            Faena
+          </span>
+
+          <strong>
+            Ejemplo
+          </strong>
+
+        </div>
+
+
+        <div class="dato">
+
+          <span>
+            Tipo
+          </span>
+
+          <strong>
+            Seguridad
+          </strong>
+
+        </div>
+
+
+        <div class="dato">
+
+          <span>
+            Responsable
+          </span>
+
+          <strong>
+            En revisión
+          </strong>
+
+        </div>
+
+
+        <div class="dato">
+
+          <span>
+            Última actualización
+          </span>
+
+          <strong>
+            Pendiente
+          </strong>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- ACCESO ADMINISTRACIÓN -->
+
+    <div class="admin-area">
+
+      <div class="divider">
+        Acceso interno
+      </div>
+
+
+      <a
+        href="admin-login.html"
+        class="admin-link"
+      >
+
+        <span class="admin-icon">
+          🔐
+        </span>
+
+        Administrar reportes
+
+      </a>
+
+    </div>
+
+  </section>
+
+
+
+  <div class="info">
+
+    <div class="info-icon">
+      i
+    </div>
+
+    <p>
+      La consulta permite visualizar el estado del reporte,
+      las acciones informadas y la retroalimentación registrada.
+      La edición y cierre están disponibles únicamente para
+      usuarios SSMA autorizados.
+    </p>
+
+  </div>
+
+
+</main>
+
+
+
+<footer>
+
+  ESM · Empresa Soluciones Mineras ·
+  Consulta y Participación de los Trabajadores
+
+</footer>
+
+
+
+<script>
+
+  function consultarReporte() {
+
+    const numero =
+      document
+        .getElementById("numeroReporte")
+        .value
+        .trim();
+
+
+    const codigo =
+      document
+        .getElementById("codigoSeguimiento")
+        .value
+        .trim();
+
+
+    if (!numero || !codigo) {
+
+      alert(
+        "Ingresa el número de reporte y el código de seguimiento."
+      );
+
+      return;
+
+    }
+
+
+    /*
+      POR AHORA ES SOLO UNA DEMOSTRACIÓN.
+
+      En el siguiente paso esta función
+      consultará Supabase utilizando:
+
+      N.º reporte + código privado.
+    */
+
+
+    document
+      .getElementById("resultado")
+      .classList
+      .add("active");
+
+  }
+
+</script>
+
+
+</body>
+
+</html>
