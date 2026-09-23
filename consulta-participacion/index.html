@@ -1,1 +1,552 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
 
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+  <meta name="theme-color" content="#004A97">
+
+  <meta name="description"
+        content="Consulta y Participación de los Trabajadores - ESM">
+
+  <title>Consulta y Participación | ESM</title>
+
+  <!-- Tipografía oficial ESM para web -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap"
+    rel="stylesheet"
+  >
+
+  <style>
+
+    :root {
+      --esm-blue: #004A97;
+      --esm-blue-80: #546EAB;
+      --esm-blue-60: #7F92C0;
+      --esm-blue-40: #AAB7D5;
+      --esm-blue-20: #D4DBEA;
+
+      --esm-green: #0DA547;
+      --esm-yellow: #EAB721;
+
+      --gray-dark: #67656C;
+      --gray: #7F8084;
+      --gray-light: #DCDCDD;
+
+      --white: #FFFFFF;
+      --background: #F5F7FA;
+      --text: #252A31;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: "Lato", Arial, sans-serif;
+      background: var(--background);
+      color: var(--text);
+
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* =========================
+       CABECERA
+    ========================== */
+
+    header {
+      background: white;
+      border-bottom: 1px solid #E5E9EF;
+    }
+
+    .header-container {
+      width: min(1180px, 92%);
+      height: 82px;
+      margin: auto;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      width: 145px;
+      max-height: 55px;
+      object-fit: contain;
+      object-position: left center;
+    }
+
+    .header-right {
+      text-align: right;
+    }
+
+    .header-right strong {
+      display: block;
+      color: var(--esm-blue);
+      font-size: 14px;
+    }
+
+    .header-right span {
+      display: block;
+      color: var(--gray);
+      font-size: 11px;
+      margin-top: 3px;
+    }
+
+    /* =========================
+       CONTENIDO PRINCIPAL
+    ========================== */
+
+    main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 55px 20px;
+    }
+
+    .main-container {
+      width: 100%;
+      max-width: 780px;
+      text-align: center;
+    }
+
+    .tag {
+      display: inline-block;
+
+      background: var(--esm-blue-20);
+      color: var(--esm-blue);
+
+      padding: 8px 15px;
+      border-radius: 30px;
+
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 1px;
+
+      margin-bottom: 22px;
+    }
+
+    h1 {
+      color: var(--esm-blue);
+      font-size: clamp(36px, 5vw, 58px);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -1px;
+    }
+
+    h1 span {
+      display: block;
+      color: var(--gray-dark);
+      font-weight: 400;
+    }
+
+    .subtitle {
+      max-width: 630px;
+      margin: 24px auto 37px;
+
+      font-size: 17px;
+      line-height: 1.6;
+
+      color: var(--gray-dark);
+    }
+
+    /* =========================
+       TARJETAS PRINCIPALES
+    ========================== */
+
+    .actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .action {
+      min-height: 125px;
+
+      border-radius: 18px;
+
+      padding: 24px;
+
+      text-decoration: none;
+
+      display: flex;
+      align-items: center;
+      gap: 18px;
+
+      text-align: left;
+
+      transition: 0.2s ease;
+    }
+
+    .action:hover {
+      transform: translateY(-3px);
+    }
+
+    .action-primary {
+      background: var(--esm-blue);
+      color: white;
+
+      box-shadow:
+        0 12px 30px rgba(0, 74, 151, 0.20);
+    }
+
+    .action-secondary {
+      background: white;
+      color: var(--esm-blue);
+
+      border: 1px solid var(--esm-blue-20);
+
+      box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.04);
+    }
+
+    .icon {
+      width: 52px;
+      height: 52px;
+      min-width: 52px;
+
+      border-radius: 50%;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      font-size: 27px;
+      font-weight: 300;
+    }
+
+    .action-primary .icon {
+      background: rgba(255,255,255,0.15);
+    }
+
+    .action-secondary .icon {
+      background: var(--esm-blue-20);
+    }
+
+    .action strong {
+      display: block;
+      font-size: 18px;
+      margin-bottom: 6px;
+    }
+
+    .action small {
+      display: block;
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .action-primary small {
+      color: rgba(255,255,255,0.78);
+    }
+
+    .action-secondary small {
+      color: var(--gray);
+    }
+
+    /* =========================
+       MENSAJE INFERIOR
+    ========================== */
+
+    .info {
+      max-width: 650px;
+      margin: 30px auto 0;
+
+      background: white;
+
+      border: 1px solid #E5E9EF;
+      border-radius: 14px;
+
+      padding: 16px 18px;
+
+      display: flex;
+      align-items: center;
+      gap: 13px;
+
+      text-align: left;
+    }
+
+    .info-icon {
+      width: 30px;
+      height: 30px;
+      min-width: 30px;
+
+      border-radius: 50%;
+
+      background: var(--esm-blue);
+      color: white;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      font-weight: 900;
+    }
+
+    .info p {
+      color: var(--gray-dark);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    /* =========================
+       PIE
+    ========================== */
+
+    footer {
+      background: white;
+      border-top: 1px solid #E5E9EF;
+
+      text-align: center;
+
+      padding: 20px;
+    }
+
+    footer strong {
+      display: block;
+      color: var(--esm-blue);
+      font-size: 12px;
+    }
+
+    footer span {
+      display: block;
+      margin-top: 4px;
+
+      color: var(--gray);
+      font-size: 10px;
+    }
+
+    /* =========================
+       CELULAR
+    ========================== */
+
+    @media (max-width: 700px) {
+
+      .header-container {
+        height: 70px;
+      }
+
+      .logo {
+        width: 115px;
+      }
+
+      .header-right strong {
+        font-size: 12px;
+      }
+
+      .header-right span {
+        display: none;
+      }
+
+      main {
+        padding: 40px 17px 50px;
+        align-items: flex-start;
+      }
+
+      h1 {
+        font-size: 36px;
+      }
+
+      .subtitle {
+        font-size: 15px;
+        margin-bottom: 28px;
+      }
+
+      .actions {
+        grid-template-columns: 1fr;
+      }
+
+      .action {
+        min-height: 100px;
+      }
+    }
+
+    @media (max-width: 420px) {
+
+      .header-right {
+        display: none;
+      }
+
+      .header-container {
+        justify-content: center;
+      }
+
+      h1 {
+        font-size: 31px;
+      }
+
+      .tag {
+        font-size: 9px;
+      }
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+  <!-- CABECERA -->
+  <header>
+
+    <div class="header-container">
+
+      <img
+        src="assets/logo-esm.png"
+        alt="ESM - Empresa Soluciones Mineras"
+        class="logo"
+      >
+
+      <div class="header-right">
+        <strong>Sistema SSMA</strong>
+        <span>Seguridad y Salud en el Trabajo</span>
+      </div>
+
+    </div>
+
+  </header>
+
+
+  <!-- CONTENIDO -->
+  <main>
+
+    <div class="main-container">
+
+      <div class="tag">
+        SEGURIDAD Y SALUD EN EL TRABAJO
+      </div>
+
+
+      <h1>
+        Consulta y Participación
+        <span>de los Trabajadores</span>
+      </h1>
+
+
+      <p class="subtitle">
+        Informa condiciones, acciones, sugerencias u oportunidades
+        de mejora relacionadas con la Seguridad y Salud en el Trabajo.
+      </p>
+
+
+      <div class="actions">
+
+        <!-- NUEVO REPORTE -->
+        <a
+          href="#"
+          class="action action-primary"
+          onclick="nuevoReporte(event)"
+        >
+
+          <div class="icon">
+            +
+          </div>
+
+          <div>
+            <strong>Realizar un reporte</strong>
+
+            <small>
+              Registrar una nueva observación,
+              condición o sugerencia.
+            </small>
+          </div>
+
+        </a>
+
+
+        <!-- CONSULTAR REPORTE -->
+        <a
+          href="#"
+          class="action action-secondary"
+          onclick="consultarReporte(event)"
+        >
+
+          <div class="icon">
+            ✓
+          </div>
+
+          <div>
+            <strong>Consultar mi reporte</strong>
+
+            <small>
+              Revisar estado, acciones y
+              retroalimentación.
+            </small>
+          </div>
+
+        </a>
+
+      </div>
+
+
+      <div class="info">
+
+        <div class="info-icon">
+          i
+        </div>
+
+        <p>
+          Tu participación contribuye a identificar peligros,
+          mejorar las condiciones de trabajo y fortalecer
+          nuestra gestión preventiva.
+        </p>
+
+      </div>
+
+    </div>
+
+  </main>
+
+
+  <!-- PIE -->
+  <footer>
+
+    <strong>
+      ESM · Empresa Soluciones Mineras
+    </strong>
+
+    <span>
+      Consulta y Participación de los Trabajadores
+    </span>
+
+  </footer>
+
+
+  <script>
+
+    function nuevoReporte(event) {
+
+      event.preventDefault();
+
+      alert(
+        "Próximo paso: construiremos el formulario para realizar un reporte."
+      );
+
+    }
+
+
+    function consultarReporte(event) {
+
+      event.preventDefault();
+
+      alert(
+        "Próximo paso: construiremos la consulta y seguimiento del reporte."
+      );
+
+    }
+
+  </script>
+
+
+</body>
+</html>
