@@ -246,9 +246,23 @@
     }
 
     .type-option label span {
-      font-size: 27px;
-      margin-bottom: 7px;
-    }
+  margin-bottom: 7px;
+}
+
+.option-icon {
+  width: 56px;
+  height: 56px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.option-icon svg {
+  width: 56px;
+  height: 56px;
+  display: block;
+}
     .iso-badge {
   width: 52px;
   height: 52px;
@@ -471,7 +485,15 @@
       .type-option label span {
         margin: 0;
       }
+.option-icon {
+  width: 48px;
+  height: 48px;
+}
 
+.option-icon svg {
+  width: 48px;
+  height: 48px;
+}     
       .form-actions {
         flex-direction: column-reverse;
       }
@@ -673,9 +695,16 @@
     >
 
     <label for="seguridad">
-      <span>🪖</span>
-      <strong>Seguridad</strong>
-    </label>
+  <span class="option-icon" aria-hidden="true">
+    <svg viewBox="0 0 64 64" class="icon-helmet">
+      <path d="M12 36c0-12 9-22 20-22s20 10 20 22H12z" fill="#ffffff" stroke="#0B63B6" stroke-width="3"/>
+      <path d="M18 36h28c0 8-6 14-14 14h-2c-8 0-12-6-12-14z" fill="#ffffff" stroke="#0B63B6" stroke-width="3"/>
+      <path d="M14 38h8v8h-8z" fill="#0B63B6"/>
+      <path d="M46 38h6" stroke="#0B63B6" stroke-width="3" stroke-linecap="round"/>
+    </svg>
+  </span>
+  <strong>Seguridad</strong>
+</label>
 
   </div>
 
@@ -690,9 +719,14 @@
     >
 
     <label for="salud">
-      <span>❤</span>
-      <strong>Salud</strong>
-    </label>
+  <span class="option-icon" aria-hidden="true">
+    <svg viewBox="0 0 64 64" class="icon-heart">
+      <path d="M32 52s-18-10.7-18-24c0-6.2 4.8-11 10.8-11 3.8 0 6.1 1.7 7.2 4 1.1-2.3 3.4-4 7.2-4C45.2 17 50 21.8 50 28c0 13.3-18 24-18 24z"
+        fill="#0B63B6"/>
+    </svg>
+  </span>
+  <strong>Salud</strong>
+</label>
 
   </div>
 
@@ -724,9 +758,17 @@
     >
 
     <label for="sugerencia">
-      <span>💡</span>
-      <strong>Sugerencia / Mejora</strong>
-    </label>
+  <span class="option-icon" aria-hidden="true">
+    <svg viewBox="0 0 64 64" class="icon-hand">
+      <circle cx="32" cy="14" r="7" fill="#0B63B6"/>
+      <path d="M32 24v16" stroke="#0B63B6" stroke-width="4" stroke-linecap="round"/>
+      <path d="M32 30l10-8" stroke="#0B63B6" stroke-width="4" stroke-linecap="round"/>
+      <path d="M24 52c0-8 4-12 8-12s8 4 8 12" fill="none" stroke="#0B63B6" stroke-width="4" stroke-linecap="round"/>
+      <path d="M20 30c4 1 6 4 6 8v6" stroke="#0B63B6" stroke-width="4" stroke-linecap="round"/>
+    </svg>
+  </span>
+  <strong>Sugerencia / Mejora</strong>
+</label>
 
   </div>
 
