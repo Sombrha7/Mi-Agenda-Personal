@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+  <meta name="theme-color" content="#004A97">
+
+  <title>Realizar Reporte | ESM</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap"
+    rel="stylesheet"
+  >
+
+  <style>
+
+    :root {
+      --esm-blue: #004A97;
+      --esm-blue-80: #546EAB;
+      --esm-blue-60: #7F92C0;
+      --esm-blue-40: #AAB7D5;
+      --esm-blue-20: #D4DBEA;
+
+      --esm-green: #0DA547;
+      --esm-yellow: #EAB721;
+
+      --gray-dark: #67656C;
+      --gray: #7F8084;
+
+      --white: #FFFFFF;
+      --background: #F5F7FA;
+      --border: #E2E7ED;
+      --text: #282C31;
+
+      --red: #C62828;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Lato", Arial, sans-serif;
+      background: var(--background);
+      color: var(--text);
+    }
+
+    /* CABECERA */
+
+    header {
+      background: white;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .header-container {
+      width: min(1100px, 92%);
+      height: 78px;
+      margin: auto;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      width: 135px;
+      height: auto;
+      display: block;
+    }
+
+    .back {
+      color: var(--esm-blue);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    /* CONTENIDO */
+
+    main {
+      width: min(900px, 94%);
+      margin: 38px auto 65px;
+    }
+
+    .title-box {
+      margin-bottom: 28px;
+    }
+
+    .tag {
+      display: inline-block;
+
+      background: var(--esm-blue-20);
+      color: var(--esm-blue);
+
+      padding: 7px 13px;
+      border-radius: 20px;
+
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 1px;
+
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      color: var(--esm-blue);
+      font-size: 36px;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      color: var(--gray-dark);
+      line-height: 1.5;
+      font-size: 15px;
+      max-width: 700px;
+    }
+
+    /* TARJETAS */
+
+    .card {
+      background: white;
+
+      border: 1px solid var(--border);
+      border-radius: 18px;
+
+      padding: 27px;
+
+      margin-bottom: 20px;
+    }
+
+    .section-title {
+      color: var(--esm-blue);
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+
+    .section-description {
+      color: var(--gray);
+      font-size: 13px;
+      margin-top: -11px;
+      margin-bottom: 19px;
+      line-height: 1.5;
+    }
+
+    /* CAMPOS */
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      color: var(--gray-dark);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+
+      border: 1px solid #CDD5DE;
+      border-radius: 10px;
+
+      padding: 13px 14px;
+
+      font-family: "Lato", Arial, sans-serif;
+      font-size: 15px;
+
+      background: white;
+      color: var(--text);
+
+      outline: none;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--esm-blue);
+
+      box-shadow:
+        0 0 0 3px rgba(0, 74, 151, 0.08);
+    }
+
+    textarea {
+      min-height: 145px;
+      resize: vertical;
+    }
+
+    .required {
+      color: var(--red);
+    }
+
+    /* TIPO DE REPORTE */
+
+    .type-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .type-option input {
+      display: none;
+    }
+
+    .type-option label {
+      min-height: 112px;
+
+      border: 2px solid #E1E6EC;
+      border-radius: 15px;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      cursor: pointer;
+
+      transition: 0.2s ease;
+    }
+
+    .type-option label:hover {
+      border-color: var(--esm-blue-40);
+      background: #FAFCFF;
+    }
+
+    .type-option label span {
+      font-size: 27px;
+      margin-bottom: 7px;
+    }
+
+    .type-option label strong {
+      font-size: 16px;
+    }
+
+    .type-option input:checked + label {
+      border-color: var(--esm-blue);
+      background: #F0F5FB;
+      color: var(--esm-blue);
+    }
+
+    /* OPCIONES */
+
+    .options {
+      display: none;
+      margin-top: 22px;
+    }
+
+    .options.active {
+      display: block;
+    }
+
+    .options-title {
+      color: var(--esm-blue);
+      font-size: 14px;
+      margin-bottom: 12px;
+    }
+
+    .check-list {
+      display: grid;
+      gap: 9px;
+    }
+
+    .check-item {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+
+      border: 1px solid var(--border);
+      border-radius: 10px;
+
+      padding: 12px;
+
+      cursor: pointer;
+
+      background: white;
+    }
+
+    .check-item:hover {
+      background: #FAFCFF;
+      border-color: var(--esm-blue-40);
+    }
+
+    .check-item input {
+      width: auto;
+      margin-top: 3px;
+    }
+
+    .check-item span {
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1.4;
+    }
+
+    /* FOTO */
+
+    .photo-box {
+      border: 2px dashed var(--esm-blue-40);
+      border-radius: 14px;
+
+      padding: 22px;
+
+      background: #FAFCFF;
+
+      text-align: center;
+    }
+
+    .photo-box strong {
+      display: block;
+      color: var(--esm-blue);
+      margin-bottom: 8px;
+    }
+
+    .photo-box input {
+      border: 0;
+      padding: 10px 0;
+    }
+
+    .note {
+      color: var(--gray);
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    /* BOTONES */
+
+    .form-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+
+      margin-top: 25px;
+    }
+
+    .btn {
+      border: none;
+      border-radius: 11px;
+
+      padding: 14px 23px;
+
+      font-family: "Lato", Arial, sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+
+      cursor: pointer;
+    }
+
+    .btn-secondary {
+      background: white;
+      color: var(--gray-dark);
+      border: 1px solid var(--border);
+    }
+
+    .btn-primary {
+      min-width: 190px;
+
+      background: var(--esm-blue);
+      color: white;
+
+      box-shadow:
+        0 8px 22px rgba(0, 74, 151, 0.18);
+    }
+
+    .btn-primary:hover {
+      background: #003E80;
+    }
+
+    /* PIE */
+
+    footer {
+      background: white;
+      border-top: 1px solid var(--border);
+
+      padding: 20px;
+
+      text-align: center;
+
+      color: var(--gray);
+      font-size: 11px;
+    }
+
+    /* CELULAR */
+
+    @media (max-width: 700px) {
+
+      .header-container {
+        height: 68px;
+      }
+
+      .logo {
+        width: 112px;
+      }
+
+      main {
+        width: 92%;
+        margin-top: 25px;
+      }
+
+      h1 {
+        font-size: 29px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .full {
+        grid-column: auto;
+      }
+
+      .card {
+        padding: 20px;
+      }
+
+      .type-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .type-option label {
+        min-height: 86px;
+        flex-direction: row;
+        gap: 12px;
+      }
+
+      .type-option label span {
+        margin: 0;
+      }
+
+      .form-actions {
+        flex-direction: column-reverse;
+      }
+
+      .btn {
+        width: 100%;
+      }
+
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+<header>
+
+  <div class="header-container">
+
+    <img
+      src="assets/logo-esm.png"
+      alt="ESM - Empresa Soluciones Mineras"
+      class="logo"
+    >
+
+    <a
+      href="index.html"
+      class="back"
+    >
+      ← Volver al inicio
+    </a>
+
+  </div>
+
+</header>
+
+
+<main>
+
+  <div class="title-box">
+
+    <div class="tag">
+      CONSULTA Y PARTICIPACIÓN
+    </div>
+
+    <h1>
+      Realizar un reporte
+    </h1>
+
+    <p class="subtitle">
+      Informa una condición, acción, situación de salud,
+      sugerencia u oportunidad de mejora relacionada con
+      Seguridad y Salud en el Trabajo.
+    </p>
+
+  </div>
+
+
+  <form id="reporteForm">
+
+
+    <!-- 1. DATOS DEL TRABAJADOR -->
+
+    <section class="card">
+
+      <h2 class="section-title">
+        1. Datos del trabajador
+      </h2>
+
+      <div class="grid">
+
+        <div class="field">
+
+          <label for="nombre">
+            Nombre completo
+            <span class="required">*</span>
+          </label>
+
+          <input
+            id="nombre"
+            type="text"
+            autocomplete="name"
+            required
+          >
+
+        </div>
+
+
+        <div class="field">
+
+          <label for="rut">
+            RUT
+            <span class="required">*</span>
+          </label>
+
+          <input
+            id="rut"
+            type="text"
+            placeholder="12.345.678-9"
+            required
+          >
+
+        </div>
+
+
+        <div class="field">
+
+          <label for="cargo">
+            Cargo
+            <span class="required">*</span>
+          </label>
+
+          <input
+            id="cargo"
+            type="text"
+            required
+          >
+
+        </div>
+
+
+        <div class="field">
+
+          <label for="faena">
+            Faena
+            <span class="required">*</span>
+          </label>
+
+          <select id="faena" required>
+
+            <option value="">
+              Seleccione una faena
+            </option>
+
+            <option value="Antofagasta">
+              Antofagasta
+            </option>
+
+            <option value="Mejillones">
+              Mejillones
+            </option>
+
+            <option value="Baquedano">
+              Baquedano
+            </option>
+
+            <option value="Prat">
+              Prat
+            </option>
+
+            <option value="Otra">
+              Otra
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <div class="field full">
+
+          <label for="lugar">
+            Lugar del evento
+            <span class="required">*</span>
+          </label>
+
+          <input
+            id="lugar"
+            type="text"
+            placeholder="Ej.: Isla 1, TK, taller, oficina, zona de abastecimiento..."
+            required
+          >
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- 2. TIPO -->
+
+    <section class="card">
+
+      <h2 class="section-title">
+        2. ¿Qué deseas informar?
+      </h2>
+
+      <p class="section-description">
+        Selecciona la alternativa que mejor represente tu reporte.
+      </p>
+
+
+      <div class="type-grid">
+
+        <div class="type-option">
+
+          <input
+            type="radio"
+            name="tipo"
+            id="seguridad"
+            value="Seguridad"
+          >
+
+          <label for="seguridad">
+
+            <span>🛡️</span>
+
+            <strong>
+              Seguridad
+            </strong>
+
+          </label>
+
+        </div>
+
+
+        <div class="type-option">
+
+          <input
+            type="radio"
+            name="tipo"
+            id="salud"
+            value="Salud"
+          >
+
+          <label for="salud">
+
+            <span>❤</span>
+
+            <strong>
+              Salud
+            </strong>
+
+          </label>
+
+        </div>
+
+
+        <div class="type-option">
+
+          <input
+            type="radio"
+            name="tipo"
+            id="sugerencia"
+            value="Sugerencia"
+          >
+
+          <label for="sugerencia">
+
+            <span>💡</span>
+
+            <strong>
+              Sugerencia / Mejora
+            </strong>
+
+          </label>
+
+        </div>
+
+      </div>
+
+
+      <!-- OPCIONES SEGURIDAD -->
+
+      <div
+        id="opcionesSeguridad"
+        class="options"
+      >
+
+        <h3 class="options-title">
+          ¿Qué situación detectaste?
+        </h3>
+
+        <div class="check-list">
+
+          <label class="check-item">
+            <input type="checkbox">
+            <span>
+              No respetar procedimientos de trabajo seguro.
+            </span>
+          </label>
+
+
+          <label class="check-item">
+            <input type="checkbox">
+            <span>
+              No utilizar herramientas preventivas en terreno.
+            </span>
+          </label>
+
+
+          <label class="check-item">
+            <input type="checkbox">
+            <span>
+              Conducción distraída y/o velocidad inadecuada.
+            </span>
+          </label>
+
+
+          <label class="check-item">
+            <input type="checkbox">
+            <span>
+              Conducta o comportamiento no apropiado.
+            </span>
+          </label>
+
+
+          <label class="check-item">
+            <input type="checkbox">
+            <span>
+              Omitir o no segregar el área de trabajo.
+            </span>
+          </label>
+
+
+          <label class="check-item">
+            <input type="checkbox">
+            <span>
+              No bloquear los equipos a abastecer.
+            </span>
+          </label>
+
+
+          <label class="check-item">
+            <input type="checkbox">
+            <span>
+              Uso de herramientas en mal estado o en forma inadecuada.
+            </span>
+          </label>
+
+
+          <label class="check-item">
+            <input type="checkbox">
+            <span>
+              Componentes de equipos en mal estado.
+            </span>
+          </label>
+
+
+          <label class="check-item">
+            <input type="checkbox">
+            <span>
+              No contar con accesorios de emergencia.
+            </span>
+          </label>
+
+
+          <label class="check-item">
+            <input type="checkbox">
+            <span>
+              Extintor no operativo o con inspección vencida.
+            </span>
+          </label>
+
+
+          <label class="check-item">
+            <input type="checkbox">
+            <span>
+              Instalaciones de faena defectuosas.
+            </span>
+          </label>
+
+
+          <label class="check-item">
+            <input type="checkbox">
+            <span>
+              Falta de mantenimiento preventivo en vehículos o equipos.
+            </span>
+          </label>
+
+
+          <label class="check-item">
+            <input type="checkbox">
+            <span>
+              Otra condición o acción de seguridad.
+            </span>
+          </label>
+
+        </div>
+
+      </div>
+
+
+      <!-- OPCIONES SALUD -->
+
+      <div
+        id="opcionesSalud"
+        class="options"
+      >
+
+        <h3 class="options-title">
+          ¿Qué situación detectaste?
+        </h3>
+
+        <div class="check-list">
+
+          <label class="check-item">
+            <input type="checkbox">
+            <span>
+              Posturas inadecuadas de trabajo.
+            </span>
+          </label>
+
+
+          <label class="check-item">
+            <input type="checkbox">
+            <span>
+              Levantamiento de peso no permitido.
+            </span>
+          </label>
+
+
+          <label class="check-item">
+            <input type="checkbox">
+            <span>
+              Falta de higiene en el ambiente laboral.
+            </span>
+          </label>
+
+
+          <label class="check-item">
+            <input type="checkbox">
+            <span>
+              No utilización de EPP según la actividad específica.
+            </span>
+          </label>
+
+
+          <label class="check-item">
+            <input type="checkbox">
+            <span>
+              Falta de hermeticidad de equipos o instalaciones.
+            </span>
+          </label>
+
+
+          <label class="check-item">
+            <input type="checkbox">
+            <span>
+              Otra situación relacionada con salud.
+            </span>
+          </label>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- 3. DESCRIPCIÓN -->
+
+    <section class="card">
+
+      <h2 class="section-title">
+        3. Antecedentes de lo informado
+      </h2>
+
+      <div class="field">
+
+        <label for="descripcion">
+          Describe lo observado
+          <span class="required">*</span>
+        </label>
+
+        <textarea
+          id="descripcion"
+          maxlength="1500"
+          placeholder="Describe brevemente qué observaste, dónde ocurrió y cualquier antecedente que consideres importante."
+          required
+        ></textarea>
+
+      </div>
+
+    </section>
+
+
+    <!-- 4. FOTO -->
+
+    <section class="card">
+
+      <h2 class="section-title">
+        4. Fotografía
+      </h2>
+
+      <p class="section-description">
+        Este campo es opcional. Puedes enviar el reporte sin fotografía.
+      </p>
+
+      <div class="photo-box">
+
+        <strong>
+          Adjuntar fotografía
+        </strong>
+
+        <input
+          type="file"
+          id="foto"
+          accept="image/*"
+        >
+
+        <p class="note">
+          Máximo una fotografía por reporte.
+          Posteriormente la aplicación la comprimirá antes de almacenarla.
+        </p>
+
+      </div>
+
+    </section>
+
+
+    <!-- BOTONES -->
+
+    <div class="form-actions">
+
+      <button
+        type="button"
+        class="btn btn-secondary"
+        onclick="window.location.href='index.html'"
+      >
+        Cancelar
+      </button>
+
+
+      <button
+        type="submit"
+        class="btn btn-primary"
+      >
+        Enviar reporte
+      </button>
+
+    </div>
+
+
+  </form>
+
+</main>
+
+
+<footer>
+  ESM · Empresa Soluciones Mineras ·
+  Consulta y Participación de los Trabajadores
+</footer>
+
+
+<script>
+
+  const seguridad =
+    document.getElementById("seguridad");
+
+  const salud =
+    document.getElementById("salud");
+
+  const sugerencia =
+    document.getElementById("sugerencia");
+
+  const opcionesSeguridad =
+    document.getElementById("opcionesSeguridad");
+
+  const opcionesSalud =
+    document.getElementById("opcionesSalud");
+
+
+  function actualizarOpciones() {
+
+    opcionesSeguridad.classList.remove("active");
+    opcionesSalud.classList.remove("active");
+
+
+    if (seguridad.checked) {
+
+      opcionesSeguridad.classList.add("active");
+
+    }
+
+
+    if (salud.checked) {
+
+      opcionesSalud.classList.add("active");
+
+    }
+
+  }
+
+
+  seguridad.addEventListener(
+    "change",
+    actualizarOpciones
+  );
+
+
+  salud.addEventListener(
+    "change",
+    actualizarOpciones
+  );
+
+
+  sugerencia.addEventListener(
+    "change",
+    actualizarOpciones
+  );
+
+
+  document
+    .getElementById("reporteForm")
+    .addEventListener(
+      "submit",
+      function(event) {
+
+        event.preventDefault();
+
+
+        const tipo =
+          document.querySelector(
+            'input[name="tipo"]:checked'
+          );
+
+
+        if (!tipo) {
+
+          alert(
+            "Selecciona Seguridad, Salud o Sugerencia / Mejora."
+          );
+
+          return;
+
+        }
+
+
+        alert(
+          "Formulario funcionando correctamente. El próximo paso será conectarlo con Supabase."
+        );
+
+      }
+    );
+
+</script>
+
+
+</body>
+</html>
